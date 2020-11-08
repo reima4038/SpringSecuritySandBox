@@ -1,5 +1,7 @@
 package com.example.springsecurity.id_password.auth;
 
+import com.example.springsecurity.id_password.auth.domain.UserAccount;
+import com.example.springsecurity.id_password.auth.domain.UserAccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +21,25 @@ public class FormLoginUserService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(FormLoginUserService.class);
 
     @Autowired
+    private UserAccountRepository repos;
+
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (StringUtils.isEmpty(username)) {
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        if (StringUtils.isEmpty(userId)) {
             logger.warn("ユーザー名が入力されていません。");
             throw new UsernameNotFoundException("ユーザー名が入力されていません。");
         }
 
-        // TODO: 認証処理の実装 （FIXME: 以下のコードは仮）
-        switch (username) {
-            case "user":
-                final String password = encoder.encode("4038");
-                return new User(username, password, Collections.emptySet());
-            default:
-                logger.warn(String.format("指定されたユーザー(%s)は存在しません。", username));
-                throw new UsernameNotFoundException(String.format("指定されたユーザー(%s)は存在しません。", username));
-        }
+        UserAccount foundAccount = repos.findByUserId(userId)
+                .orElseThrow(() -> {
+                    logger.warn(String.format("指定されたユーザー(%s)は存在しません。", userId));
+                    throw new UsernameNotFoundException(String.format("指定されたユーザー(%s)は存在しません。", userId));
+                });
+        //TODO: 権限を管理する
+        //TODO: User -> UserDetailsを扱う
+        return new User(foundAccount.getUserId(), foundAccount.getPassword(), Collections.emptySet());
     }
 }
