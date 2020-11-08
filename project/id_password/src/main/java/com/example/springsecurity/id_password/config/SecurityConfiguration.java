@@ -10,6 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated();
+        http.formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/top");
     }
 }
