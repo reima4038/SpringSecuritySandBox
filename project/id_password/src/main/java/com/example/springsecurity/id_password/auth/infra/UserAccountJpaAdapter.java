@@ -1,7 +1,7 @@
 package com.example.springsecurity.id_password.auth.infra;
 
-import com.example.springsecurity.id_password.auth.domain.UserAccount;
-import com.example.springsecurity.id_password.auth.domain.UserAccountRepository;
+import com.example.springsecurity.id_password.auth.model.UserAccount;
+import com.example.springsecurity.id_password.auth.model.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

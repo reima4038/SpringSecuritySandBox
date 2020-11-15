@@ -1,9 +1,6 @@
-package com.example.springsecurity.id_password.auth.domain;
+package com.example.springsecurity.id_password.auth.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;

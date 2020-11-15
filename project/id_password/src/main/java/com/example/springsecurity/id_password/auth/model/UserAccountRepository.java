@@ -1,4 +1,4 @@
-package com.example.springsecurity.id_password.auth.domain;
+package com.example.springsecurity.id_password.auth.model;
 
 import java.util.List;
 import java.util.Optional;

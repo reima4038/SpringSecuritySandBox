@@ -1,7 +1,8 @@
 package com.example.springsecurity.id_password.auth;
 
-import com.example.springsecurity.id_password.auth.domain.UserAccount;
-import com.example.springsecurity.id_password.auth.domain.UserAccountRepository;
+import com.example.springsecurity.id_password.auth.model.UserAccount;
+import com.example.springsecurity.id_password.auth.model.UserAccountDetails;
+import com.example.springsecurity.id_password.auth.model.UserAccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
-import java.util.Objects;
 
 @Service
 public class FormLoginUserService implements UserDetailsService {
@@ -39,7 +39,7 @@ public class FormLoginUserService implements UserDetailsService {
                     throw new UsernameNotFoundException(String.format("指定されたユーザー(%s)は存在しません。", userId));
                 });
         //TODO: 権限を管理する
-        //TODO: User -> UserDetailsを扱う
-        return new User(foundAccount.getUserId(), foundAccount.getPassword(), Collections.emptySet());
+        return new UserAccountDetails(foundAccount);
+//        return new User(foundAccount.getUserId(), foundAccount.getPassword(), Collections.emptySet());
     }
 }

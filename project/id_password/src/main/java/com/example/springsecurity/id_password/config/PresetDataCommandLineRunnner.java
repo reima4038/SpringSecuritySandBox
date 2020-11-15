@@ -1,7 +1,7 @@
 package com.example.springsecurity.id_password.config;
 
-import com.example.springsecurity.id_password.auth.domain.UserAccount;
-import com.example.springsecurity.id_password.auth.domain.UserAccountRepository;
+import com.example.springsecurity.id_password.auth.model.UserAccount;
+import com.example.springsecurity.id_password.auth.model.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
