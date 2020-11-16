@@ -28,6 +28,10 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/top").hasAnyAuthority("ROLE_ADMIN", "ROLE_NORMAL")
+                .antMatchers("/error").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")
@@ -40,6 +44,9 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
                 .logoutSuccessUrl("/login")
                 .permitAll();
 
+        // h2-console有効化 参考：https://qiita.com/rubytomato@github/items/8eee9e3fa86c89dd305c
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
 }

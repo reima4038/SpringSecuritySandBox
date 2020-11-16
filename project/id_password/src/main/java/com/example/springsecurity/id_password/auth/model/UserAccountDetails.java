@@ -16,7 +16,7 @@ public class UserAccountDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return account.getRoles();
     }
 
     @Override

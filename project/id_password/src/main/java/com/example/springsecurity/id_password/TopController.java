@@ -10,4 +10,9 @@ public class TopController {
     public String top() {
         return "top";
     }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
 }
