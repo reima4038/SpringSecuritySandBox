@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>トップページ（認証要:管理者ユーザ専用）</title>
+</head>
+<body>
+    <h1>Form認証トップページ</h1>
+    <p>認証済ユーザ（管理者）のみ確認できるトップページ</p>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">ログアウト</button>
+    </form>
+</body>
+</html>
