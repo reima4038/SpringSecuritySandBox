@@ -44,6 +44,28 @@ class SsoApplicationTests {
 	}
 
 	@Test
+	void RequestHeaderに認証情報を持たない場合ログインせずリダイレクトされる() throws Exception {
+		final RequestBuilder request = get(PAGE_PATH_TOP);
+		mockMvc.perform(request)
+				.andDo(print())
+				.andExpect(status().is3xxRedirection());
+	}
+
+	@Test
+	void RequestHeaderの認証情報が空の場合ログインせずリダイレクトされる() throws Exception {
+		final String userId = "";
+		final String password = "";
+
+		final RequestBuilder request = get(PAGE_PATH_TOP)
+				.header(REQUEST_HEADER_USER_ID, userId)
+				.header(REQUEST_HEADER_PASSWORD, password);
+
+		mockMvc.perform(request)
+				.andDo(print())
+				.andExpect(status().is3xxRedirection());
+	}
+
+	@Test
 	void 管理権限をもつユーザは管理画面へアクセスできる() throws Exception {
 		final String userId = "T10000000";
 		final String password = "";
@@ -72,6 +94,20 @@ class SsoApplicationTests {
 		mockMvc.perform(request)
 				.andDo(print())
 				.andExpect(status().isForbidden());
+	}
+
+	@Test
+	void 存在しないユーザはTOPへのアクセスを拒否されリダイレクトされる_T区分ユーザ() throws Exception {
+		final String userId = "T99999999";
+		final String password = "";
+
+		final RequestBuilder request = get(PAGE_PATH_TOP)
+				.header(REQUEST_HEADER_USER_ID, userId)
+				.header(REQUEST_HEADER_PASSWORD, password);
+
+		mockMvc.perform(request)
+				.andDo(print())
+				.andExpect(status().is3xxRedirection());
 	}
 
 }
