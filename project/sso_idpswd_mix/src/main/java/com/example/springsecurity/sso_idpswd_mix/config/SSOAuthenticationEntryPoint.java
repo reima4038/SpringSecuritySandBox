@@ -23,7 +23,7 @@ public class SSOAuthenticationEntryPoint implements AuthenticationEntryPoint {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         // 認証失敗時後の制御としてリダイレクト先を変えるサンプル
-        final String redirectURLA = "https://www.google.com/?hl=ja";
+        final String redirectToFormAuthentication = "/login";
         final String redirectURLB = "https://www.yahoo.co.jp/";
         final String redirectURLC = "https://www.youtube.com/";
         final String credential = request.getHeader(REQUEST_HEADER_USER_ID);
@@ -31,8 +31,8 @@ public class SSOAuthenticationEntryPoint implements AuthenticationEntryPoint {
         Predicate<String> isBUser = v -> v.contains("B");
 
         if(StringUtils.isEmpty(credential)) {
-            logger.warn("ログインに失敗しました。認証情報が設定されていません。");
-            httpResponse.sendRedirect(redirectURLA);
+            logger.warn("ログインに失敗しました。認証情報が設定されていません。Form認証のログイン画面に遷移します。");
+            httpResponse.sendRedirect(redirectToFormAuthentication);
         } else if(isTUser.test(credential)) {
             logger.debug("ログインに失敗しました。（T区分ユーザ）");
             httpResponse.sendRedirect(redirectURLB);
