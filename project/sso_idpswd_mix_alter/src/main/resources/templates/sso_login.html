@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SSO認証 ログインページ</title>
+</head>
+<body>
+    <form name="sso_login" th:action="@{/login}" method="post">
+        <input hidden="text" name="username" th:value="${username + '_is_sso'}">
+    </form>
+    <script type="text/javascript">
+        document.sso_login.submit();
+    </script>
+</body>
+</html>
