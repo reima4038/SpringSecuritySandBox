@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -30,6 +31,24 @@ class SsoApplicationTests {
 
 	@Nested
 	class SSO認証テスト {
+
+		@Test
+		void RequestHeaderの認証情報を使って認証しトップページに遷移する_POST() throws Exception {
+			final String userId = "T10000000";
+			final String password = "";
+
+			final RequestBuilder request = post(PAGE_PATH_TOP)
+					.header(REQUEST_HEADER_USER_ID, userId)
+					.header(REQUEST_HEADER_PASSWORD, password);
+
+			final String expectBodyText = "トップページ（認証要）";
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().is2xxSuccessful())
+					.andExpect(content().string(containsString(expectBodyText)));
+
+		}
+
 
 		@Test
 		void RequestHeaderの認証情報を使って認証しトップページに遷移する() throws Exception {
